@@ -7,6 +7,7 @@ const favicon = require("serve-favicon");
 const mongoose = require("mongoose");
 const logger = require("morgan");
 const path = require("path");
+const cors = require("cors")
 
 mongoose.Promise = Promise;
 mongoose
@@ -27,7 +28,9 @@ const debug = require("debug")(
 
 const app = express();
 
+
 // Middleware Setup
+
 app.use(logger("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -46,6 +49,7 @@ app.use(
 app.use(express.static(path.join(__dirname, "public")));
 app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
 
+app.use(cors())
 app.use("/api", require("./routes/orders"));
 
 module.exports = app;
